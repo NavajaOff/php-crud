@@ -76,6 +76,8 @@ class Usuario
 
     public function eliminarUsuario($id)
     {
-        // Lógica para eliminar un usuario
+        $sql = "DELETE FROM usuarios WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([':id' => $id]);
     }
 }
