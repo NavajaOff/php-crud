@@ -4,7 +4,29 @@ require_once 'database.php';
 
 class Usuario
 {
+    private $primer_nombre;
+    private $segundo_nombre;
+    private $primer_apellido;
+    private $segundo_apellido;
+    private $fecha_nacimiento;
+    private $telefono;
+    private $correo;
+    private $direccion;
+
     private PDO $conn;
+
+
+    public function setDatos($datos) {
+        $this->primer_nombre = $datos['primer_nombre'];
+        $this->segundo_nombre = $datos['segundo_nombre'];
+        $this->primer_apellido = $datos['primer_apellido'];
+        $this->segundo_apellido = $datos['segundo_apellido'];
+        $this->fecha_nacimiento = $datos['fecha_nacimiento'];
+        $this->telefono = $datos['telefono'];
+        $this->correo = $datos['correo'];
+        $this->direccion = $datos['direccion'];
+    }
+
 
     public function __construct()
     {
@@ -42,8 +64,15 @@ class Usuario
 
     public function crearUsuario()
     {
-        // Lógica para insertar usuario
+        $sql= "INSERT INTO usuarios (primer_nombre, segundo_nombre,primer_apellido,segundo_apellido,fecha_nacimiento,telefono,correo,direccion)
+        VALUES (?,?,?,?,?,?,?,?)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$this->primer_nombre, $this->segundo_nombre, $this->primer_apellido, $this->segundo_apellido, $this->fecha_nacimiento, $this->telefono, $this->correo, $this->direccion]);
+        // Lógica para insertar usuario 
     }
+
+        // Lógica para insertar usuario
+    
 
     public function actualizarUsuario($id, $datos)
     {
