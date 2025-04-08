@@ -45,9 +45,33 @@ class Usuario
         // Lógica para insertar usuario
     }
 
-    public function actualizarUsuario()
+    public function actualizarUsuario($id, $datos)
     {
-        // Lógica para actualizar un usuario
+        $sql = "UPDATE usuarios SET 
+                primer_nombre = :primer_nombre,
+                segundo_nombre = :segundo_nombre,
+                primer_apellido = :primer_apellido,
+                segundo_apellido = :segundo_apellido,
+                fecha_nacimiento = :fecha_nacimiento,
+                telefono = :telefono,
+                correo = :correo,
+                direccion = :direccion
+                WHERE id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        $datos[':id'] = $id;
+
+        return $stmt->execute([
+            ':primer_nombre' => $datos['primer_nombre'],
+            ':segundo_nombre' => $datos['segundo_nombre'],
+            ':primer_apellido' => $datos['primer_apellido'],
+            ':segundo_apellido' => $datos['segundo_apellido'],
+            ':fecha_nacimiento' => $datos['fecha_nacimiento'],
+            ':telefono' => $datos['telefono'],
+            ':correo' => $datos['correo'],
+            ':direccion' => $datos['direccion'],
+            ':id' => $id
+        ]);
     }
 
     public function eliminarUsuario($id)
