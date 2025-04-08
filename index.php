@@ -14,29 +14,48 @@ function solicitarDatosUsuario(): array
 {
     do {
         $primer_nombre = readline("Primer nombre: ");
+        if (empty($primer_nombre)) {
+            echo "El primer nombre no puede quedar vacío.\n"; 
+        }
     } while (empty($primer_nombre));
-
+    
     $segundo_nombre = readline("Segundo nombre (opcional): ");
 
     do {
         $primer_apellido = readline("Primer apellido: ");
+        if (empty($primer_apellido)) {
+            echo "El primer apellido no puede quedar vacío.\n";
+        }
     } while (empty($primer_apellido));
+    
 
     $segundo_apellido = readline("Segundo apellido (opcional): ");
 
     do {
         $fecha_nacimiento = readline("Fecha de nacimiento (YYYY-MM-DD): ");
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nacimiento)) {
+            echo "El año debe tener 4 digitos, el mes 2 digitos y el dia 2 digitos.\n";
+        }
     } while (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha_nacimiento));
-
     do {
         $telefono = readline("Teléfono (solo números): ");
-    } while (!preg_match('/^\d{7,15}$/', $telefono));
+        if (!preg_match('/^\d{10,13}$/', $telefono)) {
+            echo "El teléfono debe tener minimo 10 numeros y maximo 13.\n";
+        }
+    } while (!preg_match('/^\d{10,13}$/', $telefono));
+    
     do {
         $correo = readline("Correo: ");
+        if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            echo "El correo no es valido.\n";
+        }
     } while (!filter_var($correo, FILTER_VALIDATE_EMAIL));
 
     do {
         $direccion = readline("Dirección: ");
+        if (empty($direccion)) {
+            echo "La dirección no puede estar vacia.\n";
+        }
     } while (empty($direccion));
 
     return [
