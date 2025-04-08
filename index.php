@@ -4,7 +4,8 @@ require_once 'Usuario.php';
 
 $usuario = new Usuario();
 
-function leer($mensaje) {
+function leer($mensaje)
+{
     echo $mensaje;
     return trim(fgets(STDIN));
 }
@@ -30,8 +31,6 @@ function solicitarDatosUsuario(): array
     do {
         $telefono = readline("Teléfono (solo números): ");
     } while (!preg_match('/^\d{7,15}$/', $telefono));
-    
-
     do {
         $correo = readline("Correo: ");
     } while (!filter_var($correo, FILTER_VALIDATE_EMAIL));
@@ -77,13 +76,34 @@ while (true) {
 
         case 2:
             echo "\n--- Lista de usuarios ---\n";
-            $usuario->listarUsuarios();
+            $usuarios = $usuario->listarUsuarios();
+            foreach ($usuarios as $u) {
+                echo "ID: {$u['id']}\n";
+                echo "Nombre: {$u['primer_nombre']} {$u['segundo_nombre']}\n";
+                echo "Apellido: {$u['primer_apellido']} {$u['segundo_apellido']}\n";
+                echo "Edad: {$u['edad']} años\n";
+                echo "Teléfono: {$u['telefono']}\n";
+                echo "Correo: {$u['correo']}\n";
+                echo "Dirección: {$u['direccion']}\n";
+                echo "----------------------------\n";
+            }
             break;
 
         case 3:
             echo "\n--- Obtener usuario ---\n";
             $id = leer("ID del usuario: ");
-            $usuario->obtenerUsuario($id);
+            $u = $usuario->obtenerUsuario($id);
+            if ($u) {
+                echo "ID: {$u['id']}\n";
+                echo "Nombre: {$u['primer_nombre']} {$u['segundo_nombre']}\n";
+                echo "Apellido: {$u['primer_apellido']} {$u['segundo_apellido']}\n";
+                echo "Edad: {$u['edad']} años\n";
+                echo "Teléfono: {$u['telefono']}\n";
+                echo "Correo: {$u['correo']}\n";
+                echo "Dirección: {$u['direccion']}\n";
+            } else {
+                echo "Usuario no encontrado.\n";
+            }
             break;
 
         case 4:
