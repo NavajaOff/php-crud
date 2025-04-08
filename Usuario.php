@@ -35,6 +35,13 @@ class Usuario
 
     public function listarUsuarios()
     {
+        $sql= "SELECT * FROM usuarios";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        print_r ($usuarios);
+        return $usuarios;
         // Lógica para obtener todos los usuarios
     }
 
@@ -68,10 +75,10 @@ class Usuario
         VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$this->primer_nombre, $this->segundo_nombre, $this->primer_apellido, $this->segundo_apellido, $this->fecha_nacimiento, $this->telefono, $this->correo, $this->direccion]);
-        // Lógica para insertar usuario 
+
     }
 
-        // Lógica para insertar usuario
+
     
 
     public function actualizarUsuario($id, $datos)
